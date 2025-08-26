@@ -62,8 +62,12 @@ class Jogo:
         self.paredes.append(Parede(self.jan.largura * 2/3,self.jan.altura-60,1,60))
 
         self.Fim = Fim(self.jan.largura - 20,self.jan.altura - 20,10,10)
+
         # Cria Janela
         pyxel.init(self.jan.largura,self.jan.altura)
+        
+        # Carregar imagens (entre pyxel.init e pyxel.run)
+        pyxel.image(0).load(0, 0, 'cat_16x16.png')
         
         ## Roda o Jogo (sempre última linha do __init__
         pyxel.run(self.update, self.draw)
@@ -122,7 +126,14 @@ class Jogo:
         pyxel.cls(0)
         
         # Desenha o objeto gato
-        pyxel.rect(self.gato.x1,self.gato.y1,self.gato.largura,self.gato.altura,7)
+        # Se o gato fosse um retângulo:
+        # pyxel.rect(self.gato.x1,self.gato.y1,self.gato.largura,self.gato.altura,7)
+        # Desenhando a imagem (sprite) carregada no init
+        # Desenha o sprite
+        # Note que ele inverte o densenho quando necessário.
+        #     blt(           x,            y, img, u, v,  w,  h, corFundo)
+        pyxel.blt(self.gato.x1, self.gato.y1, 0  , 0, 0, 16, 16,       13)
+
         
         # Desenha as paredes
         for parede in self.paredes:
