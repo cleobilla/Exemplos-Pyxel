@@ -125,9 +125,9 @@ class Jogo:
         # Pinta a janela de preto (limpa a tela)
         pyxel.cls(0)
         
-        # Desenha o objeto gato
-        # Se o gato fosse um retângulo:
-        # pyxel.rect(self.gato.x1,self.gato.y1,self.gato.largura,self.gato.altura,7)
+        # Desenha o objeto personagem
+        # Se o personagem fosse um retângulo:
+        # pyxel.rect(self.personagem.x1,self.personagem.y1,self.personagem.largura,self.personagem.altura,7)
         # Desenhando a imagem (sprite) carregada no init
         # Desenha o sprite
         # Note que ele inverte o densenho quando necessário.
@@ -139,8 +139,9 @@ class Jogo:
         for parede in self.paredes:
                pyxel.rect(parede.x1,parede.y1,parede.largura,parede.altura,parede.cor)
         
+        # Desenha o fim do labirinto
         pyxel.rect(self.Fim.x1,self.Fim.y1,self.Fim.largura,self.Fim.altura,self.Fim.cor)
-        
+        # Testa se o jogador chegou ao fim do labirinto
         if self.colisao(self.p1,0,0,self.Fim):
             pyxel.text(self.jan.largura//3,self.jan.altura//2,"You Win",15)
 
