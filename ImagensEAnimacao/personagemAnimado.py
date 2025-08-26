@@ -25,14 +25,24 @@ class Personagem:
         # Atributos
         self.x1 = x
         self.y1 = y
+        self.quadro = 14
+        self.linha = 0
         # personagem.png
         self.largura = 14
         self.altura = 18
         
-        
-        
     # Métodos
     def move(self,dx,dy):
+        if dx > 0:
+            self.linha = 3*self.altura
+        elif dx < 0:
+            self.linha = 2*self.altura
+        elif dy<0:
+            self.linha = 1*self.altura
+        else:
+            self.linha = 0*self.altura
+
+        self.quadro = (self.quadro + self.largura) % (self.largura*4)
         self.x1 = self.x1 + dx
         self.y1 = self.y1 + dy
         
@@ -66,7 +76,7 @@ class Jogo:
         self.Fim = Fim(self.jan.largura - 20,self.jan.altura - 20,10,10)
 
         # Cria Janela
-        pyxel.init(self.jan.largura,self.jan.altura)
+        pyxel.init(self.jan.largura,self.jan.altura,fps=10)
         
         # Carregar imagens (entre pyxel.init e pyxel.run)
         pyxel.image(0).load(0, 0, 'personagem_56x72.png')
@@ -82,20 +92,21 @@ class Jogo:
         
         # Verifica o botão pressionado e verifica qual deslocamento fazer
         if pyxel.btn(pyxel.KEY_UP):
-            dy = -1
+            dy = -3
         if pyxel.btn(pyxel.KEY_DOWN):
-            dy = 1
+            dy = 3
         if pyxel.btn(pyxel.KEY_LEFT):
-            dx = -1
+            dx = -3
         if pyxel.btn(pyxel.KEY_RIGHT):
-            dx = 1
+            dx = 3
         
-        move = True
-        for parede in self.paredes:
-            if self.colisao(self.p1,dx,dy,parede):
-                move = False
-        if move:
-            self.p1.move(dx,dy)
+        if dx!=0 or dy!=0:
+            move = True
+            for parede in self.paredes:
+                if self.colisao(self.p1,dx,dy,parede):
+                    move = False
+            if move:
+                self.p1.move(dx,dy)
             
     # Testa a colisão da bola com deslocamento com uma parede
     def colisao(self,rect1,dx,dy,rect2):
@@ -133,8 +144,8 @@ class Jogo:
         # Desenhando a imagem (sprite) carregada no init
         # Desenha o sprite
         # Note que ele inverte o densenho quando necessário.
-        #     blt(           x,            y, img, u, v,  w,  h, corFundo)
-        pyxel.blt(  self.p1.x1,   self.p1.y1,   0, 0, 0, 14, 18,       7)
+        #     blt(           x,            y, img,              u,             v,  w,  h, corFundo)
+        pyxel.blt(  self.p1.x1,   self.p1.y1,   0, self.p1.quadro, self.p1.linha, 14, 18,        7)
 
         
         # Desenha as paredes
@@ -149,6 +160,7 @@ class Jogo:
 
 
 Jogo()
+
 
 
 
