@@ -37,7 +37,7 @@ class Jogo:
         # Cria Janela
         pyxel.init(self.jan.largura,self.jan.altura)
         
-        ## Roda o Jogo (sempre última linha do __init__
+        ## Roda o Jogo (sempre última linha do __init__)
         pyxel.run(self.update, self.draw)
 
     # Métodos

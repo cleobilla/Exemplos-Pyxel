@@ -2,6 +2,7 @@ import pyxel
 
 class Goal:
     def __init__(self,x1,y1,largura,altura):
+        # Atributos
         self.x1 = x1
         self.y1 = y1
         self.largura = largura
@@ -44,7 +45,7 @@ class Circulo:
     
         
 
-class janelaela:
+class Janela:
     # Construtor
     def __init__(self,largura, altura):
         self.largura = largura
@@ -54,7 +55,7 @@ class Jogo:
     # Construtor
     def __init__(self):
         #Atributos
-        self.janela = janelaela(90,80)
+        self.janela = Janela(90,80)
         self.bola = Circulo(10,20,1)
                
         # Crias as bordas e as paredes internas e coloca numa lista
@@ -77,7 +78,7 @@ class Jogo:
         # Cria janelaela
         pyxel.init(self.janela.largura,self.janela.altura)
         
-        ## Roda o Jogo (sempre última linha do __init__
+        ## Roda o Jogo (sempre última linha do __init__)
         pyxel.run(self.update, self.draw)
 
     # Métodos

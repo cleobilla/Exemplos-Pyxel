@@ -50,7 +50,7 @@ class Personagem:
         self.y1 = self.y1 + dy
         
 
-class janelaela:
+class Janela:
     # Construtor
     def __init__(self,largura, altura):
         self.largura = largura
@@ -60,7 +60,7 @@ class Jogo:
     # Construtor
     def __init__(self):
         #Atributos
-        self.janela = janelaela(90,80)
+        self.janela = Janela(90,80)
         self.gato = Personagem(10,20)
               
         # Cria bordas e paredes internas e coloca numa lista
@@ -111,7 +111,7 @@ class Jogo:
         if move:
             self.gato.move(dx,dy)
             
-    # Testa a colisão de retangulo com deslocamento e outro retangulo
+    # Testa a colisão de um retângulo+(dx,dy) com outro retângulo
     def colisao(self,rect1,dx,dy,rect2):
         # Limites da bola
         rect1_esq = rect1.x1 + dx

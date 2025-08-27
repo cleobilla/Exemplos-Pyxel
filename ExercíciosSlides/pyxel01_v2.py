@@ -22,11 +22,12 @@ class Jogo:
         # Cria o objeto Bola da classe Circulo (chama o construtor de Círculo)
         self.bola = Circulo(10,20,5)
         
-        ## Roda o Jogo (sempre última linha do __init__
+        ## Roda o Jogo (sempre última linha do __init__)
         pyxel.run(self.update, self.draw)
 
     # Métodos
     def update(self):
+        # Nada a fazer ainda.
         pass
 
     def draw(self):

@@ -12,6 +12,7 @@ class Jogo:
 
     # Métodos
     def update(self):
+        # Nada a fazer ainda.
         pass
 
     def draw(self):
@@ -27,3 +28,5 @@ class Jogo:
 
 # Executa o construtor da classe Jogo
 Jogo()
+
+# Esse código limita bastante a programação, já que x,y,... só são vistos dentro do método draw()

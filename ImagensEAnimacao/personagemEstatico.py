@@ -116,7 +116,7 @@ class Jogo:
             if move:
                 self.heroi.move(dx,dy)
             
-    # Testa a colisão da bola com deslocamento com uma parede
+    # Testa a colisão de um retângulo+(dx,dy) com outro retângulo
     def colisao(self,rect1,dx,dy,rect2):
         # Limites da bola
         rect1_esq = rect1.x1 + dx

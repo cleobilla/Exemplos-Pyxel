@@ -33,7 +33,7 @@ class Jogo:
         # Cria Janela
         pyxel.init(self.jan.largura,self.jan.altura)
         
-        ## Roda o Jogo (sempre última linha do __init__
+        ## Roda o Jogo (sempre última linha do __init__)
         pyxel.run(self.update, self.draw)
 
     # Métodos
@@ -54,13 +54,13 @@ class Jogo:
         
         # Testa se ao aplicar o deslocamento a bola ainda fica dentro da tela.
         # Testa se bate na direita
-        if self.bola.x+self.bola.raio+dx<self.jan.largura:
+        if self.bola.x + self.bola.raio + dx < self.jan.largura:
             # Testa se bate na esquerda
-            if self.bola.x-self.bola.raio+dx>0:
+            if self.bola.x - self.bola.raio + dx > 0:
                 # Testa se bate em cima
-                if self.bola.y-self.bola.raio+dy>0:
+                if self.bola.y - self.bola.raio + dy > 0:
                     # Testa se bate embaixo
-                    if self.bola.y+self.bola.raio+dy<self.jan.altura:   
+                    if self.bola.y + self.bola.raio + dy < self.jan.altura:   
                         self.bola.move(dx,dy)
 
     def draw(self):
