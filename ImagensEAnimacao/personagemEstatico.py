@@ -1,12 +1,15 @@
 import pyxel
 
-class Fim:
+class Goal:
     def __init__(self,x1,y1,largura,altura):
         self.x1 = x1
         self.y1 = y1
         self.largura = largura
         self.altura = altura
         self.cor = 15
+    # Métodos
+    def desenha(self):
+        pyxel.rect(self.x1,self.y1,self.largura,self.altura,self.cor)
 
 class Parede:
     # Construtor
@@ -17,7 +20,9 @@ class Parede:
         self.largura = largura
         self.altura = altura
         self.cor = 9
-
+    # Métodos
+    def desenha(self):
+        pyxel.rect(self.x1,self.y1,self.largura,self.altura,self.cor)
 
 class Personagem:
     # Construtor
@@ -25,17 +30,30 @@ class Personagem:
         # Atributos
         self.x1 = x
         self.y1 = y
+        self.colImagem = 0
+        self.linImagem = 0
         # personagem.png
         self.largura = 14
         self.altura = 18
         
-        
-        
     # Métodos
     def move(self,dx,dy):
+        # Move a imagem
         self.x1 = self.x1 + dx
         self.y1 = self.y1 + dy
-        
+
+    def desenha(self):
+        # Desenha o objeto personagem
+        # Se o personagem fosse um retângulo:
+        # pyxel.rect(self.personagem.x1,self.personagem.y1,self.personagem.largura,self.personagem.altura,7)
+        # Desenhando a imagem (sprite) carregada no init
+        # Desenha o sprite
+        # Calcula a posição da imagem no conjunto de sprites
+          xImagem = 0
+          yImagem = 0
+        # pyxel.blt(           x,            y, img,       u,       v,            w,           h, corFundo)
+          pyxel.blt(     self.x1,      self.y1,   0, xImagem, yImagem, self.largura, self.altura,        7)
+
 
 class Janela:
     # Construtor
@@ -47,26 +65,26 @@ class Jogo:
     # Construtor
     def __init__(self):
         #Atributos
-        self.jan = Janela(90,80)
-        self.p1 = Personagem(10,20)
+        self.janela = Janela(90,80)
+        self.heroi  = Personagem(10,20)
                 
-        self.paredes=[]
+        self.paredes = []
         #Borda superior
-        self.paredes.append(Parede(0,0,self.jan.largura,1))
+        self.paredes.append(Parede(0,0,self.janela.largura,1))
         #Borda inferior
-        self.paredes.append(Parede(0,self.jan.altura-1,self.jan.largura,1))
+        self.paredes.append(Parede(0,self.janela.altura-1,self.janela.largura,1))
         #Borda esquerda
-        self.paredes.append(Parede(0,0,1,self.jan.altura))
+        self.paredes.append(Parede(0,0,1,self.janela.altura))
         #Borda direita
-        self.paredes.append(Parede(self.jan.largura-1,0,1,self.jan.altura))
+        self.paredes.append(Parede(self.janela.largura-1,0,1,self.janela.altura))
         # Paredes centrais 
-        self.paredes.append(Parede(self.jan.largura//3,0,1,50))
-        self.paredes.append(Parede(self.jan.largura * 2/3,self.jan.altura-50,1,50))
+        self.paredes.append(Parede(self.janela.largura//3,0,1,50))
+        self.paredes.append(Parede(self.janela.largura * 2/3,self.janela.altura-50,1,50))
 
-        self.Fim = Fim(self.jan.largura - 20,self.jan.altura - 20,10,10)
+        self.fim = Goal(self.janela.largura - 20,self.janela.altura - 20,10,10)
 
         # Cria Janela
-        pyxel.init(self.jan.largura,self.jan.altura)
+        pyxel.init(self.janela.largura,self.janela.altura,fps=10)
         
         # Carregar imagens (entre pyxel.init e pyxel.run)
         pyxel.image(0).load(0, 0, 'personagem_56x72.png')
@@ -82,20 +100,21 @@ class Jogo:
         
         # Verifica o botão pressionado e verifica qual deslocamento fazer
         if pyxel.btn(pyxel.KEY_UP):
-            dy = -1
+            dy = -3
         if pyxel.btn(pyxel.KEY_DOWN):
-            dy = 1
+            dy = 3
         if pyxel.btn(pyxel.KEY_LEFT):
-            dx = -1
+            dx = -3
         if pyxel.btn(pyxel.KEY_RIGHT):
-            dx = 1
+            dx = 3
         
-        move = True
-        for parede in self.paredes:
-            if self.colisao(self.p1,dx,dy,parede):
-                move = False
-        if move:
-            self.p1.move(dx,dy)
+        if dx!=0 or dy!=0:
+            move = True
+            for parede in self.paredes:
+                if self.colisao(self.heroi,dx,dy,parede):
+                    move = False
+            if move:
+                self.heroi.move(dx,dy)
             
     # Testa a colisão da bola com deslocamento com uma parede
     def colisao(self,rect1,dx,dy,rect2):
@@ -127,28 +146,24 @@ class Jogo:
         # Pinta a janela de preto (limpa a tela)
         pyxel.cls(0)
         
-        # Desenha o objeto personagem
-        # Se o personagem fosse um retângulo:
-        # pyxel.rect(self.personagem.x1,self.personagem.y1,self.personagem.largura,self.personagem.altura,7)
-        # Desenhando a imagem (sprite) carregada no init
-        # Desenha o sprite
-        # Note que ele inverte o densenho quando necessário.
-        #     blt(           x,            y, img, u, v,  w,  h, corFundo)
-        pyxel.blt(  self.p1.x1,   self.p1.y1,   0, 0, 0, 14, 18,       7)
+        # Desenha o objeto heroi da classe Personagem
+        self.heroi.desenha()
+                
+        # Desenha o objeto fim da classe Goal
+        self.fim.desenha()
 
         
         # Desenha as paredes
         for parede in self.paredes:
-               pyxel.rect(parede.x1,parede.y1,parede.largura,parede.altura,parede.cor)
+            parede.desenha()
         
-        # Desenha o fim do labirinto
-        pyxel.rect(self.Fim.x1,self.Fim.y1,self.Fim.largura,self.Fim.altura,self.Fim.cor)
         # Testa se o jogador chegou ao fim do labirinto
-        if self.colisao(self.p1,0,0,self.Fim):
-            pyxel.text(self.jan.largura//3,self.jan.altura//2,"You Win",15)
+        if self.colisao(self.heroi,0,0,self.fim):
+            pyxel.text(self.janela.largura//3,self.janela.altura//2,"You Win",15)
 
 
 Jogo()
+
 
 
 
