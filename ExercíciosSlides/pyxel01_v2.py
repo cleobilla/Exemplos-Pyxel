@@ -8,6 +8,9 @@ class Circulo:
         self.y = y
         self.raio = raio
         self.cor = 7
+    # Métodos
+    def desenha(self):
+        pyxel.circ(self.x,self.y,self.raio,self.cor)
 
 class Jogo:
     # Construtor
@@ -31,6 +34,6 @@ class Jogo:
         pyxel.cls(0)
         
         # Desenha a Bola
-        pyxel.circ(self.bola.x,self.bola.y,self.bola.raio,self.cor)
+        self.bola.desenha()
 
 Jogo()

@@ -9,6 +9,9 @@ class Parede:
         self.largura = largura
         self.altura = altura
         self.cor = 9
+    # Métodos
+    def desenha(self):
+        pyxel.rect(self.x1,self.y1,self.largura,self.altura,self.cor)
 
 
 class Circulo:
@@ -21,6 +24,9 @@ class Circulo:
         self.cor = 7
         
     # Métodos
+    def desenha(self):
+        pyxel.circ(self.x,self.y,self.raio,self.cor)
+
     def move(self,dx,dy):
         self.x = self.x + dx
         self.y = self.y + dy
@@ -39,6 +45,7 @@ class Jogo:
         self.jan = Janela(90,80)
         self.bola = Circulo(10,20,1)
                 
+        # Cria as bordas e a parede interna e coloca numa lista.
         self.paredes=[]
         #Borda superior
         self.paredes.append(Parede(0,0,self.jan.largura,1))
@@ -47,7 +54,7 @@ class Jogo:
         #Borda esquerda
         self.paredes.append(Parede(0,0,1,self.jan.altura))
         #Borda direita
-        self.paredes.append(Parede(self.jan.largura,0,1,self.jan.altura))
+        self.paredes.append(Parede(self.jan.largura-1,0,1,self.jan.altura))
         # Parede central
         self.paredes.append(Parede(self.jan.largura//2,0,1,60))
 
@@ -90,9 +97,9 @@ class Jogo:
         
         # Limites da parede
         parede_esq = parede.x1 
-        parede_dir = parede.x1 + parede.largura - 1
+        parede_dir = parede.x1 + parede.largura
         parede_top = parede.y1 
-        parede_dow = parede.y1 + parede.altura - 1
+        parede_dow = parede.y1 + parede.altura
         
         # Bola ultrapassa limites das paredes?
         if (bola_dir >= parede_esq and
@@ -111,11 +118,11 @@ class Jogo:
         pyxel.cls(0)
         
         # Desenha o objeto bola
-        pyxel.circ(self.bola.x,self.bola.y,self.bola.raio,self.bola.cor)
+        self.bola.desenha()
         
         # Desenha as paredes
         for parede in self.paredes:
-               pyxel.rect(parede.x1,parede.y1,parede.largura,parede.altura,parede.cor)
+               parede.desenha()
 
 Jogo()
 

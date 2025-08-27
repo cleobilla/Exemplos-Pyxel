@@ -9,8 +9,10 @@ class Circulo:
         self.raio = raio
         self.cor = 7
         
-    
     # Métodos
+    def desenha(self):
+        pyxel.circ(self.x,self.y,self.raio,self.cor)
+
     def move(self,dx,dy):
         self.x = self.x + dx
         self.y = self.y + dy
@@ -66,7 +68,7 @@ class Jogo:
         pyxel.cls(0)
         
         # Desenha o objeto bola
-        pyxel.circ(self.bola.x,self.bola.y,self.bola.raio,self.bola.cor)
+        self.bola.desenha()
 
 Jogo()
 

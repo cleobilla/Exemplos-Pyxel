@@ -11,6 +11,9 @@ class Circulo:
         self.dx = 1 # deslocamento de x, velocidade de x ou derivada de x (posição)
     
     # Métodos
+    def desenha(self):
+        pyxel.circ(self.x,self.y,self.raio,self.cor)
+
     def move(self):
         self.x = self.x + self.dx
 
@@ -51,6 +54,6 @@ class Jogo:
         pyxel.cls(0)
         
         # Desenha o objeto bola
-        pyxel.circ(self.bola.x,self.bola.y,self.bola.raio,self.bola.cor)
+        self.bola.desenha()
 
 Jogo()
