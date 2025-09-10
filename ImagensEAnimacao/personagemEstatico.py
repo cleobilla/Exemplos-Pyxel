@@ -51,8 +51,16 @@ class Personagem:
         # Calcula a posição da imagem no conjunto de sprites
           xImagem = 0
           yImagem = 0
-        # pyxel.blt(           x,            y, img,       u,       v,            w,           h, corFundo)
-          pyxel.blt(     self.x1,      self.y1,   0, xImagem, yImagem, self.largura, self.altura,        7)
+
+          pyxel.blt( self.x1,          # x de onde desenhar a imagem na janela.
+                     self.y1,          # y de onde desenhar a imagem na janela.
+                     0,                # qual das imagens (matrizes) que pyxel disponibiliza: 0, 1 ou 2.
+                     xImagem,          # x na matriz (memória) onde a imagem está armazenada.
+                     yImagem,          # y na matriz (memória) onde a imagem está armazenada.
+                     self.largura,     # largura da imagem na matriz (memória) e na tela.
+                     self.altura,      # altura da imagem na matriz (memória) e na tela.
+                     7				   # cor que deve ser tratada como transparente.
+                     )
 
 
 class Janela:

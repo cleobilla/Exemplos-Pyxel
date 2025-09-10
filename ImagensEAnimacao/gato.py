@@ -25,7 +25,6 @@ class Parede:
     def desenha(self):
         pyxel.rect(self.x1,self.y1,self.largura,self.altura,self.cor)
 
-
 class Personagem:
     # Construtor
     def __init__(self, x,y):
@@ -34,7 +33,7 @@ class Personagem:
         self.y1 = y
         # cat_16x16.png
         self.largura = 16
-        self.altura = 16        
+        self.altura  = 16        
     # Métodos
     def desenha(self):
         # Desenha o objeto personagem
@@ -42,8 +41,15 @@ class Personagem:
         # pyxel.rect(self.x1,self.y1,self.largura,self.altura,7)
         # Desenhando a imagem (sprite) carregada no init
         # Desenha o sprite
-        # pyxel.blt(      x,       y, img, u, v, w           ,h          , corFundo)
-          pyxel.blt(self.x1, self.y1, 0  , 0, 0, self.largura,self.altura, 13)
+          pyxel.blt( self.x1,          # x de onde desenhar a imagem na janela.
+                     self.y1,          # y de onde desenhar a imagem na janela.
+                     0,                # qual das imagens (matrizes) que pyxel disponibiliza: 0, 1 ou 2.
+                     0,                # x na matriz (memória) onde a imagem está armazenada.
+                     0,                # y na matriz (memória) onde a imagem está armazenada.
+                     self.largura,     # largura da imagem na matriz (memória) e na tela.
+                     self.altura,      # altura da imagem na matriz (memória) e na tela.
+                     13				   # cor que deve ser tratada como transparente.
+                     )
         
     def move(self,dx,dy):
         self.x1 = self.x1 + dx
