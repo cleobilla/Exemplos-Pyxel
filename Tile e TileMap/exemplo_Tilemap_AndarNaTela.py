@@ -67,7 +67,7 @@ class Jogo:
         
         pyxel.init(self.tilemap_largura*TILE_SIZE,self.tilemap_altura*TILE_SIZE)
 
-        pyxel.load("novo.pyxres")
+        pyxel.load("recursos.pyxres")
         self.mostraTileMap()
 
         self.p = Jogador()
