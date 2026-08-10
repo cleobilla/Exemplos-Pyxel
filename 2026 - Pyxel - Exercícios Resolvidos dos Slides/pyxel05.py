@@ -99,7 +99,6 @@ class Jogo:
         for parede in self.paredes:
             if self.colisao(self.bola,parede):
                 self.bola.move(-dx,-dy)
-                print("aa")
 
     # Testa a colisão entre dois objetos
     def colisao(self,obj1,obj2):

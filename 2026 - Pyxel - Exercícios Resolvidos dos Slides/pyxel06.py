@@ -8,7 +8,13 @@ class Goal:
         self.largura = largura
         self.altura = altura
         self.cor = 15
+        self.criarBox()
     # Métodos
+
+    def criarBox(self):
+        self.x2 = self.x1 + self.largura - 1 # Largura é o número de pixels, como começa do zero tem que subtrair 1 para achar a coordenada do último pixel
+        self.y2 = self.y1 + self.altura - 1 # Altura é o número de pixels, como começa do zero tem que subtrair 1 para achar a coordenada do último pixel
+
     def desenha(self):
         pyxel.rect(self.x1,self.y1,self.largura,self.altura,self.cor)
 
@@ -22,6 +28,11 @@ class Parede:
         self.largura = largura
         self.altura = altura
         self.cor = 9
+        self.criarBox()
+
+    def criarBox(self):
+        self.x2 = self.x1 + self.largura - 1 # Largura é o número de pixels, como começa do zero tem que subtrair 1 para achar a coordenada do último pixel
+        self.y2 = self.y1 + self.altura - 1 # Altura é o número de pixels, como começa do zero tem que subtrair 1 para achar a coordenada do último pixel
     # Métodos
     def desenha(self):
         pyxel.rect(self.x1,self.y1,self.largura,self.altura,self.cor)
@@ -34,7 +45,13 @@ class Circulo:
         self.y = y
         self.raio = raio
         self.cor = 7
-        
+        self.criarBox()
+
+    def criarBox(self):
+        self.x1 = self.x - self.raio
+        self.y1 = self.y - self.raio
+        self.x2 = self.x + self.raio
+        self.y2 = self.y + self.raio
     # Métodos
     def desenha(self):
         pyxel.circ(self.x,self.y,self.raio,self.cor)
@@ -42,6 +59,7 @@ class Circulo:
     def move(self,dx,dy):
         self.x = self.x + dx
         self.y = self.y + dy
+        self.criarBox()
     
         
 
@@ -69,8 +87,8 @@ class Jogo:
         #Borda direita
         self.paredes.append(Parede(self.janela.largura-1,0,1,self.janela.altura))
         # Paredes centrais 
-        self.paredes.append(Parede(self.janela.largura//3,0,1,60))
-        self.paredes.append(Parede((self.janela.largura * 2)//3,self.janela.altura-60,1,60))
+        self.paredes.append(Parede(self.janela.largura//3,0,2,60))
+        self.paredes.append(Parede((self.janela.largura * 2)//3,self.janela.altura-60,2,60))
 
         # Cria o objeto fim da classe Goal, indicando o fim do labirinto.
         self.fim = Goal(self.janela.largura - 20,self.janela.altura - 20,10,10)
@@ -96,36 +114,26 @@ class Jogo:
             dx = -1
         if pyxel.btn(pyxel.KEY_RIGHT):
             dx = 1
-        
-        move = True
-        for parede in self.paredes:
-            if self.colisao(self.bola,dx,dy,parede):
-                move = False
-        if move:
-            self.bola.move(dx,dy)
-            
-    # Testa a colisão da bola com deslocamento com uma parede
-    def colisao(self,bola,dx,dy,parede):
-        # Limites da bola
-        bola_esq = bola.x-bola.raio+dx
-        bola_dir = bola.x+bola.raio+dx
-        bola_top = bola.y-bola.raio+dy
-        bola_dow = bola.y+bola.raio+dy
-        
-        # Limites da parede
-        parede_esq = parede.x1 
-        parede_dir = parede.x1 + parede.largura
-        parede_top = parede.y1 
-        parede_dow = parede.y1 + parede.altura
-        
-        # Bola ultrapassa limites das paredes?
-        if (bola_dir >= parede_esq and
-            bola_esq <= parede_dir and
-            bola_top <= parede_dow and
-            bola_dow >= parede_top):
-            return True
 
-        return False
+        self.bola.move(dx,dy)
+        for parede in self.paredes:
+            if self.colisao(self.bola,parede):
+                self.bola.move(-dx,-dy)
+        
+    # Testa a colisão entre dois objetos
+    def colisao(self,obj1,obj2):
+        colisao_x = (
+            (obj2.x1 <= obj1.x1 and obj1.x1 <= obj2.x2) or
+            (obj2.x1 <= obj1.x2 and obj1.x2 <= obj2.x2)
+        )
+        colisao_y = (
+            (obj2.y1 <= obj1.y1 and obj1.y1 <= obj2.y2) or
+            (obj2.y1 <= obj1.y2 and obj1.y2 <= obj2.y2)
+        )
+        if colisao_x and colisao_y:
+            return True
+        else:
+            return False
             
             
 
@@ -143,7 +151,7 @@ class Jogo:
             
         self.fim.desenha()
         
-        if self.colisao(self.bola,0,0,self.fim):
+        if self.colisao(self.bola,self.fim):
             pyxel.text(self.janela.largura//3,self.janela.altura//2,"You Win",15)
 
 
