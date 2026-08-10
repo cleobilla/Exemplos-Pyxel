@@ -70,7 +70,7 @@ class Jogo:
         #Borda direita
         self.paredes.append(Parede(self.jan.largura-1,0,1,self.jan.altura))
         # Parede central
-        self.paredes.append(Parede(self.jan.largura//2,0,1,60))
+        self.paredes.append(Parede(self.jan.largura//2,0,2,60))
 
         # Cria Janela
         pyxel.init(self.jan.largura,self.jan.altura)
